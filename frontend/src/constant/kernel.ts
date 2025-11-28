@@ -20,23 +20,39 @@ export const CorePidFilePath = CoreWorkingDirectory + '/pid.txt'
 export const CoreConfigFilePath = CoreWorkingDirectory + '/config.json'
 export const CoreCacheFilePath = CoreWorkingDirectory + '/cache.db'
 
-export const ModeOptions = [
-  {
-    label: 'kernel.global',
-    value: ClashMode.Global,
-    desc: 'kernel.globalDesc',
-  },
-  {
-    label: 'kernel.rule',
-    value: ClashMode.Rule,
-    desc: 'kernel.ruleDesc',
-  },
-  {
-    label: 'kernel.direct',
-    value: ClashMode.Direct,
-    desc: 'kernel.directDesc',
-  },
-]
+export const getModeOptions = (customModes?: Record<string, string>) => {  
+  const defaultModes = [  
+    {  
+      label: 'kernel.global',  
+      value: ClashMode.Global,  
+      desc: 'kernel.globalDesc',  
+    },  
+    {  
+      label: 'kernel.rule',   
+      value: ClashMode.Rule,  
+      desc: 'kernel.ruleDesc',  
+    },  
+    {  
+      label: 'kernel.direct',  
+      value: ClashMode.Direct,  
+      desc: 'kernel.directDesc',  
+    },  
+  ]  
+    
+  if (customModes) {  
+    // 合并自定义模式  
+    return Object.entries(customModes).map(([key, name]) => ({  
+      label: name,  
+      value: key,  
+      desc: `Custom mode: ${name}`,  
+    }))  
+  }  
+    
+  return defaultModes  
+}  
+  
+// 保留原有的 ModeOptions 作为默认值  
+export const ModeOptions = getModeOptions()
 
 export const LogLevelOptions = [
   {
